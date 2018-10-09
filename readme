@@ -1,0 +1,45 @@
+unzip the box_parker folder in your home folder
+
+then go to OpenDAVinci/automotive/miniature/boxparker and follow the readme given there to install OpenDAVinci in your system and compile the source code. (Note do not try to run docker simulation from the instructions given there)
+
+In source folder you will find the file BoxParker.cpp. This is the source file from which the executable will be built. Replace (copy-paste the code) this file with the one we have provided separately for different scenarios. (given in the next step) 
+
+There are three codes- 
+BoxParker_0.cpp : this just normally parks in the empty space it gets on the right side of the scenario (use scenario Parking_boxes.scnx) 
+BoxParker_obstacle.cpp : this code finds an empty space for parking, in this process if any obstacle (any car or barrier) comes ahead it stops our vehicle (use scenario assignment_2.scnx) 
+BoxParker_uturn.cpp : this code finds an empty space for parking on the right hand side, if doesnt get any space then it takes a uturn at the end and again starts searching for empty space at the opposite lane and parks wherever it gets the right space (use scenario sassignment_2.scnx) 
+
+
+for loading different scenarios, edit the configuration file in DIT-168 folder. 
+
+follow the instructions provided in Introduction Simulation pdf for installing docker
+
+then modify the paths in the commands provided in the pdf according to the installed setup in your pc
+
+
+Note: for editing and creating new scenarios go to scenario_editor and run ScUI (provided all dependencies are met)
+
+
+
+
+sample commands:
+
+1) odsupercomponent
+sudo docker run -ti --rm --net=host -v $HOME/box_parker/DIT-168:/opt/configuration -w /opt/configuration seresearch/opendavinci-ubuntu-16.04-complete:latest /opt/od4/bin/odsupercomponent --cid=111 --verbose=1
+
+2) odsimvehicle
+sudo docker run -ti --rm --net=host seresearch/opendavinci-ubuntu-16.04-complete:latest /opt/od4/bin/odsimvehicle --cid=111 --freq=10
+
+3) odsimirus
+sudo docker run -ti --rm --net=host -v $HOME/box_parker/DIT-168:/opt/configuration -w /opt/configuration seresearch/opendavinci-ubuntu-16.04-complete:latest /opt/od4/bin/odsimirus --cid=111 --freq=10
+
+4) odcockpit
+xhost +
+sudo docker run -ti --rm --net=host --ipc=host -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $HOME/box_parker/DIT-168:/opt/configuration -w /opt/configuration seresearch/opendavinci-ubuntu-16.04-complete:latest /opt/od4/bin/odcockpit --cid=111
+
+5) run boxparker from build
+~/box_parker/OpenDaVINCI/automotive/miniature/boxparker/build$ sudo ./boxparker --cid=111 --freq=10
+
+
+
+
